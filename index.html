@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>W.I.S.E.C.E.O. – Worldwide Institute of Success & Excellence</title>
+<style>
+  :root {
+    --blue: #0071e3;
+    --blue-dark: #0077ed;
+    --gold: #f5a623;
+    --gold-light: #ffcc00;
+    --white: #ffffff;
+    --off-white: #f5f5f7;
+    --gray: #86868b;
+    --dark: #1d1d1f;
+    --light-border: #d2d2d7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Arial,sans-serif; color:var(--dark); background:var(--white); -webkit-font-smoothing:antialiased; }
+  a { text-decoration:none; color:inherit; }
+
+  nav {
+    position:fixed; top:0; width:100%; z-index:1000;
+    background:rgba(255,255,255,.85); backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(0,0,0,.08);
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 40px; height:52px;
+  }
+  .nav-logo { font-size:1rem; font-weight:700; color:var(--dark); }
+  .nav-logo span { color:var(--blue); }
+  .nav-links { display:flex; gap:32px; }
+  .nav-links a { color:var(--dark); font-size:.82rem; opacity:.8; transition:opacity .2s; }
+  .nav-links a:hover { opacity:1; color:var(--blue); }
+  .nav-cta { background:var(--blue); color:var(--white); padding:7px 18px; border-radius:980px; font-size:.82rem; font-weight:600; transition:background .2s; }
+  .nav-cta:hover { background:#0077ed; opacity:1; }
+
+  #hero {
+    min-height:100vh; background:var(--white);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:120px 20px 80px;
+  }
+  .hero-eyebrow { font-size:.85rem; font-weight:600; color:var(--blue); letter-spacing:.5px; text-transform:uppercase; margin-bottom:20px; animation:fadeUp .5s ease forwards; opacity:0; }
+  .acronym-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; max-width:800px; width:100%; margin-bottom:48px; }
+  .letter-card { background:var(--off-white); border-radius:18px; padding:18px 6px; text-align:center; animation:fadeUp .5s ease forwards; opacity:0; transition:transform .2s,box-shadow .2s; }
+  .letter-card:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(0,0,0,.1); }
+  .letter-card:nth-child(1){animation-delay:.05s} .letter-card:nth-child(2){animation-delay:.1s}
+  .letter-card:nth-child(3){animation-delay:.15s} .letter-card:nth-child(4){animation-delay:.2s}
+  .letter-card:nth-child(5){animation-delay:.25s} .letter-card:nth-child(6){animation-delay:.3s}
+  .letter-card:nth-child(7){animation-delay:.35s}
+  .letter-big { font-size:2rem; font-weight:700; color:var(--blue); line-height:1; }
+  .letter-word { font-size:.58rem; color:var(--gray); font-weight:500; margin-top:6px; text-transform:uppercase; letter-spacing:.3px; }
+  .hero-title { font-size:clamp(2.4rem,5vw,4rem); font-weight:700; color:var(--dark); letter-spacing:-.04em; line-height:1.1; margin-bottom:12px; animation:fadeUp .5s .4s ease forwards; opacity:0; }
+  .hero-title .accent { color:var(--blue); }
+  .hero-tagline { font-size:clamp(1.1rem,2vw,1.5rem); color:var(--gray); font-weight:400; margin-bottom:16px; animation:fadeUp .5s .5s ease forwards; opacity:0; }
+  .hero-sub { font-size:clamp(.9rem,1.5vw,1.05rem); color:var(--gray); max-width:620px; line-height:1.7; margin-bottom:44px; animation:fadeUp .5s .55s ease forwards; opacity:0; }
+  .hero-btns { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; animation:fadeUp .5s .6s ease forwards; opacity:0; }
+  .btn-primary { background:var(--blue); color:var(--white); padding:13px 28px; border-radius:980px; font-size:.95rem; font-weight:600; transition:background .2s,transform .15s; }
+  .btn-primary:hover { background:#0077ed; transform:scale(1.02); }
+  .btn-secondary { background:transparent; color:var(--blue); padding:12px 28px; border-radius:980px; font-size:.95rem; font-weight:600; border:1.5px solid var(--blue); transition:all .2s; }
+  .btn-secondary:hover { background:var(--blue); color:var(--white); }
+
+  .divider { height:1px; background:var(--light-border); max-width:1200px; margin:0 auto; }
+
+  .pillars-strip { background:var(--off-white); padding:24px 40px; display:flex; justify-content:center; gap:48px; flex-wrap:wrap; }
+  .pillar { display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--dark); font-weight:500; }
+
+  #about { background:var(--white); padding:100px 20px; }
+  .about-inner { max-width:980px; margin:0 auto; }
+  .section-label { font-size:.85rem; font-weight:600; color:var(--blue); text-transform:uppercase; letter-spacing:.5px; margin-bottom:12px; }
+  .section-title { font-size:clamp(1.8rem,3.5vw,3rem); font-weight:700; color:var(--dark); letter-spacing:-.03em; line-height:1.1; margin-bottom:28px; }
+  .about-cols { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-top:48px; }
+  .about-cols p { font-size:1rem; color:#444; line-height:1.75; margin-bottom:18px; }
+  .tag-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .chip { background:var(--off-white); color:var(--dark); font-size:.75rem; font-weight:600; padding:5px 14px; border-radius:980px; border:1px solid var(--light-border); }
+  .chip.blue { background:#e8f0fb; color:var(--blue); border-color:rgba(0,113,227,.2); }
+  .about-card-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .about-card { background:var(--off-white); border-radius:18px; padding:24px 20px; }
+  .about-card .icon { font-size:1.6rem; margin-bottom:10px; }
+  .about-card h4 { font-size:.9rem; font-weight:600; color:var(--dark); margin-bottom:6px; }
+  .about-card p { font-size:.82rem; color:var(--gray); line-height:1.5; margin:0; }
+
+  #programs { background:var(--off-white); padding:100px 20px; }
+  .programs-inner { max-width:1100px; margin:0 auto; }
+  .programs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+  .prog-card { background:var(--white); border-radius:20px; padding:32px 28px; transition:transform .2s,box-shadow .2s; }
+  .prog-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,.1); }
+  .prog-icon { font-size:1.8rem; margin-bottom:16px; }
+  .prog-card h3 { font-size:1.05rem; font-weight:600; color:var(--dark); margin-bottom:10px; letter-spacing:-.02em; }
+  .prog-card p { font-size:.88rem; color:var(--gray); line-height:1.65; margin-bottom:16px; }
+  .prog-badge { display:inline-block; font-size:.7rem; font-weight:600; padding:3px 10px; border-radius:980px; letter-spacing:.3px; }
+  .badge-apple { background:#e8f0fb; color:var(--blue); }
+  .badge-eda { background:#fff8e1; color:#7a5400; }
+  .badge-both { background:#e8f5e9; color:#1b5e20; }
+
+  #impact { background:var(--white); padding:100px 20px; text-align:center; }
+  .impact-inner { max-width:900px; margin:0 auto; }
+  .metrics-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:48px; }
+  .metric-box { background:var(--off-white); border-radius:20px; padding:36px 20px; }
+  .metric-box .num { font-size:2.2rem; font-weight:700; color:var(--blue); letter-spacing:-.04em; }
+  .metric-box .label { font-size:.82rem; color:var(--gray); margin-top:8px; line-height:1.4; }
+
+  #donate { background:var(--dark); padding:100px 20px; text-align:center; }
+  #donate .section-label { color:var(--gold-light); }
+  #donate .section-title { color:var(--white); max-width:700px; margin:0 auto 16px; }
+  #donate p { color:rgba(255,255,255,.65); font-size:1rem; max-width:560px; margin:0 auto 40px; line-height:1.7; }
+  .donate-amounts { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:36px; }
+  .amt-btn { background:rgba(255,255,255,.08); color:var(--white); border:1px solid rgba(255,255,255,.2); padding:11px 28px; border-radius:980px; font-size:.95rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:inherit; }
+  .amt-btn:hover,.amt-btn.active { background:var(--gold); color:var(--dark); border-color:var(--gold); }
+  .donate-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-gold { background:var(--gold); color:var(--dark); padding:13px 32px; border-radius:980px; font-size:.95rem; font-weight:700; transition:background .2s,transform .15s; }
+  .btn-gold:hover { background:var(--gold-light); transform:scale(1.02); }
+  .btn-ghost { border:1.5px solid rgba(255,255,255,.4); color:var(--white); padding:12px 32px; border-radius:980px; font-size:.95rem; font-weight:600; transition:all .2s; }
+  .btn-ghost:hover { border-color:var(--white); background:rgba(255,255,255,.08); }
+
+  #contact { background:var(--off-white); padding:100px 20px; }
+  .contact-inner { max-width:660px; margin:0 auto; }
+  .contact-inner > p { color:var(--gray); font-size:.95rem; line-height:1.7; margin-bottom:36px; }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:.82rem; font-weight:600; color:var(--dark); margin-bottom:7px; }
+  .field input,.field textarea,.field select { width:100%; padding:12px 16px; border:1.5px solid var(--light-border); border-radius:12px; font-size:.95rem; font-family:inherit; background:var(--white); color:var(--dark); transition:border-color .2s; }
+  .field input:focus,.field textarea:focus,.field select:focus { outline:none; border-color:var(--blue); }
+  .field textarea { resize:vertical; min-height:110px; }
+  .ai-box { background:var(--white); border:1.5px solid var(--blue); border-radius:16px; padding:24px; margin:20px 0; display:none; }
+  .ai-box-label { font-size:.72rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.8px; margin-bottom:10px; }
+  .ai-box p { font-size:.93rem; color:var(--dark); line-height:1.75; }
+  .ai-loading { color:var(--blue); font-size:.9rem; font-style:italic; display:none; margin:12px 0; }
+  .form-btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+
+  #newsletter { background:var(--white); padding:80px 20px; text-align:center; border-top:1px solid var(--light-border); }
+  .nl-inner { max-width:560px; margin:0 auto; }
+  #newsletter p { color:var(--gray); margin-bottom:28px; font-size:.95rem; }
+  .nl-form { display:flex; gap:10px; max-width:420px; margin:0 auto; }
+  .nl-form input { flex:1; padding:12px 18px; border-radius:980px; border:1.5px solid var(--light-border); font-size:.93rem; font-family:inherit; }
+  .nl-form input:focus { outline:none; border-color:var(--blue); }
+
+  footer { background:var(--off-white); border-top:1px solid var(--light-border); padding:36px 40px; text-align:center; }
+  .footer-logo { font-size:.95rem; font-weight:700; color:var(--dark); margin-bottom:8px; }
+  .footer-logo span { color:var(--blue); }
+  footer p { font-size:.78rem; color:var(--gray); line-height:1.6; }
+  footer a { color:var(--blue); font-size:.78rem; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fade-in { opacity:0; transform:translateY(16px); transition:opacity .55s ease,transform .55s ease; }
+  .fade-in.visible { opacity:1; transform:none; }
+
+  @media(max-width:900px){ .programs-grid{grid-template-columns:1fr 1fr} .metrics-row{grid-template-columns:1fr 1fr} .about-cols{grid-template-columns:1fr;gap:36px} }
+  @media(max-width:620px){ .acronym-grid{grid-template-columns:repeat(4,1fr)} .programs-grid{grid-template-columns:1fr} nav{padding:0 20px} .nav-links{display:none} .pillars-strip{gap:20px;padding:20px} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>W.I.S.E.C.E.O.</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#programs">Programs</a>
+    <a href="#impact">Impact</a>
+    <a href="#donate">Give</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get Involved</a>
+</nav>
+
+<section id="hero">
+  <p class="hero-eyebrow">Worldwide Institute of Success &amp; Excellence</p>
+  <div class="acronym-grid">
+    <div class="letter-card"><div class="letter-big">W</div><div class="letter-word">Worldwide</div></div>
+    <div class="letter-card"><div class="letter-big">I</div><div class="letter-word">Institute</div></div>
+    <div class="letter-card"><div class="letter-big">S</div><div class="letter-word">Success</div></div>
+    <div class="letter-card"><div class="letter-big">E</div><div class="letter-word">Excellence</div></div>
+    <div class="letter-card"><div class="letter-big">C</div><div class="letter-word">Creating</div></div>
+    <div class="letter-card"><div class="letter-big">E</div><div class="letter-word">Equity</div></div>
+    <div class="letter-card"><div class="letter-big">O</div><div class="letter-word">Opportunity</div></div>
+  </div>
+  <h1 class="hero-title">Creating <span class="accent">Equity</span> &amp; Opportunity.</h1>
+  <p class="hero-tagline">For every community. Everywhere.</p>
+  <p class="hero-sub">W.I.S.E.C.E.O. bridges the digital divide and expands access to technology, workforce readiness, and economic mobility for historically underserved communities worldwide.</p>
+  <div class="hero-btns">
+    <a href="#programs" class="btn-primary">Explore Our Programs</a>
+    <a href="#about" class="btn-secondary">Our Mission</a>
+  </div>
+</section>
+
+<div class="pillars-strip">
+  <div class="pillar"><span>💻</span> Digital Access &amp; Equity</div>
+  <div class="pillar"><span>🎓</span> Workforce Development</div>
+  <div class="pillar"><span>🚀</span> Innovation &amp; Entrepreneurship</div>
+  <div class="pillar"><span>📈</span> Economic Mobility</div>
+  <div class="pillar"><span>🌍</span> Community Resilience</div>
+</div>
+
+<section id="about">
+  <div class="about-inner fade-in">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">Excellence is not a privilege.<br>It's a right.</h2>
+    <div class="about-cols">
+      <div>
+        <p>W.I.S.E.C.E.O. is a 501(c)(3) nonprofit dedicated to dismantling systemic barriers that prevent underserved communities from accessing technology, education, and economic opportunity. We serve first-generation learners, immigrants, refugees, and low-income youth and adults — communities historically underrepresented in technology and the workforce.</p>
+        <p>Through coding education, digital literacy, career pathway development, and entrepreneurship support, we equip individuals with the critical skills needed to succeed in today's innovation economy — generating measurable, lasting economic impact.</p>
+        <div class="tag-row">
+          <span class="chip blue">Digital Equity</span>
+          <span class="chip blue">Workforce Readiness</span>
+          <span class="chip blue">Innovation Economy</span>
+          <span class="chip blue">Job Creation</span>
+          <span class="chip blue">Economic Resilience</span>
+          <span class="chip blue">Underserved Communities</span>
+        </div>
+      </div>
+      <div class="about-card-grid">
+        <div class="about-card"><div class="icon">🌍</div><h4>Worldwide Reach</h4><p>Programs serving communities across the globe, with a focus on under-resourced regions.</p></div>
+        <div class="about-card"><div class="icon">💡</div><h4>Tech &amp; Innovation</h4><p>Bridging the digital divide with coding, creativity, and technology education.</p></div>
+        <div class="about-card"><div class="icon">📊</div><h4>Economic Impact</h4><p>Measurable job creation, private investment, and long-term community prosperity.</p></div>
+        <div class="about-card"><div class="icon">✊</div><h4>Equity First</h4><p>Every program designed to remove barriers and create genuine access to opportunity.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="programs">
+  <div class="programs-inner fade-in">
+    <p class="section-label">What We Do</p>
+    <h2 class="section-title">Programs built to open doors.</h2>
+    <div class="programs-grid">
+      <div class="prog-card"><div class="prog-icon">💻</div><h3>Digital Literacy &amp; Coding</h3><p>Bringing coding, creativity, and technology education to communities historically left behind — powered by app design, creative problem-solving, and hands-on learning.</p><span class="prog-badge badge-apple">🍎 Apple CEI-Aligned</span></div>
+      <div class="prog-card"><div class="prog-icon">🎯</div><h3>Workforce Development</h3><p>Sector-based training that aligns participants with in-demand, high-wage careers — building human capital and connecting talent to competitive employers.</p><span class="prog-badge badge-eda">🏛 EDA-Aligned</span></div>
+      <div class="prog-card"><div class="prog-icon">🚀</div><h3>Entrepreneurship &amp; Innovation</h3><p>Supporting small business development, startup incubation, and innovation ecosystems in distressed communities — creating jobs and attracting private investment.</p><span class="prog-badge badge-eda">🏛 EDA-Aligned</span></div>
+      <div class="prog-card"><div class="prog-icon">🌱</div><h3>Youth Leadership Academy</h3><p>Cultivating diverse innovators through technology immersion, leadership development, and career pathways — preparing young people for the economy of tomorrow.</p><span class="prog-badge badge-both">✅ Apple &amp; EDA-Aligned</span></div>
+      <div class="prog-card"><div class="prog-icon">📚</div><h3>Education Access &amp; Equity</h3><p>Expanding access to quality education for first-generation students, English language learners, immigrants, and refugees — building pathways to economic mobility.</p><span class="prog-badge badge-apple">🍎 Apple CEI-Aligned</span></div>
+      <div class="prog-card"><div class="prog-icon">🏘️</div><h3>Community Economic Resilience</h3><p>Strengthening economically distressed communities through technical assistance, strategic planning, and investments that build lasting capacity for growth.</p><span class="prog-badge badge-eda">🏛 EDA-Aligned</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="impact-inner fade-in">
+    <p class="section-label">Our Impact</p>
+    <h2 class="section-title">Real change. Measurable results.</h2>
+    <div class="metrics-row">
+      <div class="metric-box"><div class="num">🌍</div><div class="label">Worldwide Communities Served</div></div>
+      <div class="metric-box"><div class="num">💼</div><div class="label">Workforce Pathways Created</div></div>
+      <div class="metric-box"><div class="num">💡</div><div class="label">Innovation Programs Launched</div></div>
+      <div class="metric-box"><div class="num">📈</div><div class="label">Economic Growth Generated</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="donate">
+  <div class="fade-in" style="max-width:700px;margin:0 auto;">
+    <p class="section-label">Make a Difference</p>
+    <h2 class="section-title">Invest in equity.<br>Invest in opportunity.</h2>
+    <p>Every dollar empowers a learner, launches a career, and strengthens a community. Your support fuels the programs that create lasting economic change.</p>
+    <div class="donate-amounts">
+      <button class="amt-btn" onclick="setAmt(this)">$25</button>
+      <button class="amt-btn" onclick="setAmt(this)">$50</button>
+      <button class="amt-btn active" onclick="setAmt(this)">$100</button>
+      <button class="amt-btn" onclick="setAmt(this)">$250</button>
+      <button class="amt-btn" onclick="setAmt(this)">Custom</button>
+    </div>
+    <div class="donate-btns">
+      <a href="#contact" class="btn-gold">Donate Now</a>
+      <a href="#contact" class="btn-ghost">Volunteer With Us</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner fade-in">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">We'd love to hear from you.</h2>
+    <p>Tell us about yourself and how W.I.S.E.C.E.O. can serve you. Our AI-powered form will generate a personalized response and next steps just for you.</p>
+    <div class="field"><label>Your Name</label><input type="text" id="fname" placeholder="First and last name"/></div>
+    <div class="field"><label>Email Address</label><input type="email" id="femail" placeholder="you@example.com"/></div>
+    <div class="field">
+      <label>I am interested in...</label>
+      <select id="finterest">
+        <option value="">— Select one —</option>
+        <option>Receiving support / services</option>
+        <option>Volunteering</option>
+        <option>Donating</option>
+        <option>Partnering / Collaborating</option>
+        <option>Learning more about W.I.S.E.C.E.O.</option>
+      </select>
+    </div>
+    <div class="field"><label>Tell us about yourself and your goals</label><textarea id="fmessage" placeholder="Share a little about who you are, what challenges you face, or how you'd like to get involved..."></textarea></div>
+    <p class="ai-loading" id="aiLoading">✦ Generating your personalized message…</p>
+    <div class="ai-box" id="aiBox">
+      <div class="ai-box-label">✦ Your Personalized Message from W.I.S.E.C.E.O.</div>
+      <p id="aiText"></p>
+    </div>
+    <div class="form-btns">
+      <button class="btn-primary" onclick="generateAI()" style="border:none;cursor:pointer;font-family:inherit;font-size:.95rem;">✦ Generate My Message</button>
+      <button class="btn-secondary" onclick="submitForm()" style="cursor:pointer;background:transparent;font-family:inherit;font-size:.95rem;">Submit</button>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="nl-inner fade-in">
+    <h2 class="section-title" style="font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:10px;">Stay in the loop.</h2>
+    <p>Join our community for updates on programs, events, and opportunities to create equity and opportunity together.</p>
+    <div class="nl-form">
+      <input type="email" id="nlEmail" placeholder="your@email.com"/>
+      <button class="btn-primary" onclick="subscribeNewsletter()" style="border:none;cursor:pointer;font-family:inherit;white-space:nowrap;">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>W.I.S.E.C.E.O.</span> — Worldwide Institute of Success &amp; Excellence</div>
+  <p>"Creating Equity &amp; Opportunity" &nbsp;·&nbsp; 501(c)(3) Nonprofit Organization</p>
+  <p style="margin-top:12px;">© 2025 W.I.S.E.C.E.O. All rights reserved. &nbsp;·&nbsp; <a href="#contact">Contact</a> &nbsp;·&nbsp; <a href="#about">About</a></p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  function setAmt(el) {
+    document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function subscribeNewsletter() {
+    const em = document.getElementById('nlEmail').value.trim();
+    if(!em || !em.includes('@')) { alert('Please enter a valid email address.'); return; }
+    document.getElementById('nlEmail').value = '';
+    alert('Thank you for subscribing! Welcome to the W.I.S.E.C.E.O. community.');
+  }
+
+  async function generateAI() {
+    const name = document.getElementById('fname').value.trim();
+    const interest = document.getElementById('finterest').value;
+    const message = document.getElementById('fmessage').value.trim();
+    if(!name || !message) { alert('Please fill in your name and share a bit about yourself first.'); return; }
+    document.getElementById('aiLoading').style.display = 'block';
+    document.getElementById('aiBox').style.display = 'none';
+    const prompt = `You are a warm, inspiring representative of W.I.S.E.C.E.O. (Worldwide Institute of Success & Excellence), a nonprofit whose mission is "Creating Equity & Opportunity." The organization focuses on digital literacy, workforce development, innovation, entrepreneurship, and economic mobility for historically underserved communities.
+A person named ${name} has reached out. Their interest: "${interest || 'general inquiry'}". Here is what they shared: "${message}"
+Write a short, personalized, encouraging response (3-4 sentences) that: 1. Genuinely acknowledges who they are and what they shared 2. Connects their situation or goals to W.I.S.E.C.E.O.'s mission around equity, opportunity, and economic empowerment 3. Offers one clear, warm, specific next step they can take. Keep the tone uplifting, human, and empowering. Avoid generic phrases.`;
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
+      });
+      const data = await res.json();
+      const text = data.content?.map(b=>b.text||'').join('') || 'Thank you for reaching out! We are excited to connect with you.';
+      document.getElementById('aiText').textContent = text;
+      document.getElementById('aiBox').style.display = 'block';
+    } catch(e) {
+      document.getElementById('aiText').textContent = 'Thank you for reaching out to W.I.S.E.C.E.O.! We are excited to connect with you and explore how we can create equity and opportunity together.';
+      document.getElementById('aiBox').style.display = 'block';
+    } finally {
+      document.getElementById('aiLoading').style.display = 'none';
+    }
+  }
+
+  function submitForm() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const message = document.getElementById('fmessage').value.trim();
+    if(!name || !email || !message) { alert('Please fill in all fields before submitting.'); return; }
+    alert(`Thank you, ${name}! Your message has been received. We'll be in touch at ${email} soon. Together, we are Creating Equity & Opportunity.`);
+    ['fname','femail','fmessage'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('finterest').value='';
+    document.getElementById('aiBox').style.display='none';
+  }
+</script>
+</body>
+</html>
