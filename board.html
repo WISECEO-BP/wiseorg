@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Board of Directors – W.I.S.E.C.E.O.</title>
+<style>
+  :root {
+    --blue: #0071e3;
+    --blue-dark: #0077ed;
+    --gold: #f5a623;
+    --gold-light: #ffcc00;
+    --white: #ffffff;
+    --off-white: #f5f5f7;
+    --gray: #86868b;
+    --dark: #1d1d1f;
+    --light-border: #d2d2d7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Arial,sans-serif; color:var(--dark); background:var(--white); -webkit-font-smoothing:antialiased; }
+  a { text-decoration:none; color:inherit; }
+
+  nav {
+    position:fixed; top:0; width:100%; z-index:1000;
+    background:rgba(255,255,255,.85); backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(0,0,0,.08);
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 40px; height:52px;
+  }
+  .nav-logo { font-size:1rem; font-weight:700; color:var(--dark); }
+  .nav-logo span { color:var(--blue); }
+  .nav-links { display:flex; gap:32px; }
+  .nav-links a { color:var(--dark); font-size:.82rem; opacity:.8; transition:opacity .2s; }
+  .nav-links a:hover { opacity:1; color:var(--blue); }
+  .nav-links a.active { opacity:1; color:var(--blue); font-weight:600; }
+  .nav-cta { background:var(--blue); color:var(--white); padding:7px 18px; border-radius:980px; font-size:.82rem; font-weight:600; transition:background .2s; }
+  .nav-cta:hover { background:#0077ed; opacity:1; }
+
+  .page-hero {
+    padding:140px 20px 80px;
+    text-align:center;
+    background:var(--white);
+  }
+  .hero-label {
+    display:inline-block;
+    background:linear-gradient(135deg, var(--blue), #00b4d8);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+    font-size:.85rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:2.5px; margin-bottom:16px;
+  }
+  .page-hero h1 {
+    font-size:clamp(2rem,5vw,3.4rem); font-weight:800;
+    color:var(--dark); letter-spacing:-.04em; line-height:1.1; margin-bottom:20px;
+  }
+  .page-hero p {
+    font-size:1.15rem; color:var(--gray); max-width:600px;
+    margin:0 auto; line-height:1.6;
+  }
+  .hero-divider {
+    width:60px; height:4px; border-radius:2px;
+    background:linear-gradient(90deg, var(--blue), #00b4d8);
+    margin:48px auto 64px;
+  }
+
+  .board-grid {
+    max-width:1200px; margin:0 auto; padding:0 24px 80px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:32px;
+  }
+
+  .board-card {
+    background:var(--white); border-radius:24px; overflow:hidden;
+    max-width:380px; width:100%;
+    box-shadow:0 4px 20px rgba(0,0,0,.06);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .board-card:hover {
+    transform:translateY(-6px);
+    box-shadow:0 20px 60px rgba(0,113,227,.12), 0 8px 24px rgba(0,0,0,.08);
+  }
+
+  .card-photo-area {
+    height:300px; display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .card-photo-area .deco-1 {
+    position:absolute; width:200px; height:200px; border-radius:50%;
+    background:rgba(255,255,255,.05); top:-40px; right:-40px;
+  }
+  .card-photo-area .deco-2 {
+    position:absolute; width:120px; height:120px; border-radius:50%;
+    background:rgba(255,255,255,.05); bottom:-20px; left:-20px;
+  }
+
+  .photo-circle {
+    width:190px; height:190px; border-radius:50%;
+    border:4px solid rgba(255,255,255,.4);
+    overflow:hidden; position:relative;
+    box-shadow:0 8px 32px rgba(0,0,0,.3);
+  }
+  .photo-circle img {
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  .placeholder-circle {
+    width:190px; height:190px; border-radius:50%;
+    background:rgba(255,255,255,.1); backdrop-filter:blur(10px);
+    border:3px dashed rgba(255,255,255,.3);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+  }
+  .placeholder-circle svg { opacity:.3; }
+  .placeholder-circle span {
+    font-size:.6rem; color:rgba(255,255,255,.6);
+    text-transform:uppercase; letter-spacing:1.5px;
+  }
+
+  .card-info { padding:28px 28px 32px; }
+  .card-info h3 {
+    font-size:1.3rem; font-weight:700; color:var(--dark); margin:0;
+  }
+  .card-info .role {
+    font-size:.78rem; font-weight:600; color:var(--blue);
+    text-transform:uppercase; letter-spacing:1.2px; margin-top:6px;
+  }
+  .card-info p {
+    font-size:.93rem; line-height:1.65; color:var(--gray); margin-top:16px;
+  }
+
+  .gradient-tiffany { background:linear-gradient(135deg, #0071e3 0%, #00b4d8 50%, #48cae4 100%); }
+  .gradient-david { background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+  .gradient-kwesi { background:linear-gradient(135deg, #2d6a4f 0%, #40916c 50%, #52b788 100%); }
+
+  .quote-band {
+    background:linear-gradient(135deg, var(--blue) 0%, #00b4d8 100%);
+    padding:60px 24px; text-align:center; margin-top:20px;
+  }
+  .quote-band blockquote {
+    max-width:700px; margin:0 auto;
+    font-size:1.3rem; line-height:1.6; color:var(--white);
+    font-weight:500; font-style:italic;
+  }
+  .quote-band .attr {
+    margin-top:20px; font-size:.85rem;
+    color:rgba(255,255,255,.75); font-weight:500; font-style:normal;
+  }
+
+  .cta-section {
+    text-align:center; padding:70px 24px 80px; background:var(--white);
+  }
+  .cta-section h2 {
+    font-size:clamp(1.5rem,3vw,2rem); font-weight:700;
+    color:var(--dark); margin-bottom:12px; letter-spacing:-.03em;
+  }
+  .cta-section p {
+    font-size:1rem; color:var(--gray); max-width:500px;
+    margin:0 auto 28px; line-height:1.6;
+  }
+  .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--blue); color:var(--white); padding:13px 28px; border-radius:980px; font-size:.95rem; font-weight:600; transition:background .2s,transform .15s; border:none; cursor:pointer; }
+  .btn-primary:hover { background:#0077ed; transform:scale(1.02); }
+  .btn-secondary { background:transparent; color:var(--blue); padding:12px 28px; border-radius:980px; font-size:.95rem; font-weight:600; border:1.5px solid var(--blue); transition:all .2s; }
+  .btn-secondary:hover { background:var(--blue); color:var(--white); }
+
+  footer { background:var(--off-white); border-top:1px solid var(--light-border); padding:36px 40px; text-align:center; }
+  .footer-logo { font-size:.95rem; font-weight:700; color:var(--dark); margin-bottom:8px; }
+  .footer-logo span { color:var(--blue); }
+  footer p { font-size:.78rem; color:var(--gray); line-height:1.6; }
+  footer a { color:var(--blue); font-size:.78rem; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fade-in { opacity:0; transform:translateY(16px); transition:opacity .55s ease,transform .55s ease; }
+  .fade-in.visible { opacity:1; transform:none; }
+
+  @media(max-width:620px){
+    nav { padding:0 20px; }
+    .nav-links { display:none; }
+    .board-grid { padding:0 16px 60px; gap:24px; }
+    .card-photo-area { height:260px; }
+    .photo-circle, .placeholder-circle { width:150px; height:150px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span>W.I.S.E.C.E.O.</span></a>
+  <div class="nav-links">
+    <a href="index.html#about">About</a>
+    <a href="index.html#programs">Programs</a>
+    <a href="board.html" class="active">Board</a>
+    <a href="index.html#impact">Impact</a>
+    <a href="index.html#donate">Give</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get Involved</a>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-label">Leadership</div>
+  <h1>Board of Directors</h1>
+  <p>Guided by passion, driven by purpose. Our board brings together experienced leaders committed to creating equity and opportunity in every community we serve.</p>
+</section>
+
+<div class="hero-divider"></div>
+
+<section class="board-grid">
+
+  <!-- Tiffany Davidson -->
+  <div class="board-card fade-in">
+    <div class="card-photo-area gradient-tiffany">
+      <div class="deco-1"></div>
+      <div class="deco-2"></div>
+      <div class="photo-circle">
+        <img src="images/tiffany.jpg" alt="Tiffany Davidson"/>
+      </div>
+    </div>
+    <div class="card-info">
+      <h3>Tiffany Davidson</h3>
+      <div class="role">Executive Director &amp; Board Chair</div>
+      <p>A passionate educator and social entrepreneur, Tiffany brings over a decade of experience in education, literacy, and workforce development. With dual Master's degrees in Literacy/Secondary Language Acquisition (TESOL) and Curriculum &amp; Instruction, and ongoing graduate studies in Educational Administration at the University of Dayton, she founded W.I.S.E.C.E.O. to bridge the digital divide and create pathways to economic mobility for underserved communities.</p>
+    </div>
+  </div>
+
+  <!-- David Crawford -->
+  <div class="board-card fade-in">
+    <div class="card-photo-area gradient-david">
+      <div class="deco-1"></div>
+      <div class="deco-2"></div>
+      <div class="photo-circle">
+        <img src="images/david.png" alt="David Crawford"/>
+      </div>
+    </div>
+    <div class="card-info">
+      <h3>David Crawford</h3>
+      <div class="role">Board Vice Chair</div>
+      <p>David brings strategic leadership and a deep commitment to community empowerment. With extensive experience in organizational development and governance, he ensures W.I.S.E.C.E.O.'s mission is reflected in every decision. His dedication to equity and excellence strengthens the organization's foundation and expands its reach.</p>
+    </div>
+  </div>
+
+  <!-- Kwesi Babatu -->
+  <div class="board-card fade-in">
+    <div class="card-photo-area gradient-kwesi">
+      <div class="deco-1"></div>
+      <div class="deco-2"></div>
+      <div class="placeholder-circle">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="30" r="14" fill="rgba(255,255,255,.3)"/>
+          <ellipse cx="40" cy="62" rx="22" ry="16" fill="rgba(255,255,255,.3)"/>
+        </svg>
+        <span>Photo coming soon</span>
+      </div>
+    </div>
+    <div class="card-info">
+      <h3>Kwesi Babatu</h3>
+      <div class="role">Treasurer</div>
+      <p>Kwesi oversees W.I.S.E.C.E.O.'s financial stewardship with precision and integrity. His expertise in fiscal management and nonprofit finance ensures that every dollar advances the organization's mission of creating equity and opportunity. He is committed to transparency and sustainable growth.</p>
+    </div>
+  </div>
+
+</section>
+
+<section class="quote-band">
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="margin-bottom:20px;opacity:.4;">
+    <path d="M10 25C10 21 12 17 18 15L19 17C15 19 14 21 14 23H18V30H10V25ZM24 25C24 21 26 17 32 15L33 17C29 19 28 21 28 23H32V30H24V25Z" fill="white"/>
+  </svg>
+  <blockquote>"Our commitment is to build bridges — between technology and people, between education and opportunity, between where communities are and where they deserve to be."</blockquote>
+  <div class="attr">— W.I.S.E.C.E.O. Board of Directors</div>
+</section>
+
+<section class="cta-section">
+  <h2>Join Our Mission</h2>
+  <p>Whether you volunteer, donate, or spread the word — every action creates ripples of change in communities that need it most.</p>
+  <div class="cta-btns">
+    <a href="index.html#contact" class="btn-primary">Get Involved</a>
+    <a href="index.html#donate" class="btn-secondary">Make a Donation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>W.I.S.E.C.E.O.</span> — Worldwide Institute of Success &amp; Excellence</div>
+  <p>"Creating Equity &amp; Opportunity" &nbsp;·&nbsp; 501(c)(3) Nonprofit Organization</p>
+  <p style="margin-top:12px;">© 2026 W.I.S.E.C.E.O. All rights reserved. &nbsp;·&nbsp; <a href="index.html#contact">Contact</a> &nbsp;·&nbsp; <a href="index.html#about">About</a> &nbsp;·&nbsp; <a href="board.html">Board</a></p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
