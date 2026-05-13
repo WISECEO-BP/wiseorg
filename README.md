@@ -31,4 +31,4 @@ Programs are aligned with:
 ## Contact
 For inquiries, visit the live site or reach out through the AI-powered contact form.
 
-© 2025 W.I.S.E.C.E.O. All rights reserved.
+© 2026 W.I.S.E.C.E.O. All rights reserved.
